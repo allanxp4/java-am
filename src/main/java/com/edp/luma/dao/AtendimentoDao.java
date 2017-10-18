@@ -82,12 +82,12 @@ private Connection conn;
 		List<Atendimento> atendimentos = new ArrayList<>();
 		while(set.next()){
 			Atendimento atendimento = new Atendimento();
-			atendimento.setAtendente_id(set.getInt("antendente_id"));
+			atendimento.setAtendente_id(set.getInt("atendente_id"));
 			atendimento.setCliente_id(set.getInt("cliente_id"));
 			atendimento.setLocal_id(set.getInt("local_id"));
 			atendimento.setOcorrencia_id(set.getInt("ocorrencia_id"));
 			atendimento.setTemp_atendimento(set.getFloat("temp_atendimento"));
-			atendimento.setDate(set.getDate("date"));
+			atendimento.setDate(set.getDate("data"));
 			atendimentos.add(atendimento);
 		}
 		

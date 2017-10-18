@@ -55,9 +55,8 @@ public class Atendente implements Validator {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	public Atendente(int id, String nome, String cpf, String rg, String endereco, boolean ativo) {
+	public Atendente(String nome, String cpf, String rg, String endereco, boolean ativo) {
 		super();
-		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.rg = rg;

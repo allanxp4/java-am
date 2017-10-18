@@ -22,8 +22,8 @@ public class ClienteDao {
 	}
 	
 	public String adicionar(Cliente cliente, Local local) throws SQLException{
-		String sql = "INSERT INTO cliente (id, nome, email, telefone, cpf, login, senha, local)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO clientes (id, nome, email, telefone, cpf, login, senha)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement estrutura = con.prepareStatement(sql);
 		estrutura.setInt(1, cliente.getId());
 		estrutura.setString(2, cliente.getNome());
@@ -32,7 +32,6 @@ public class ClienteDao {
 		estrutura.setString(5, cliente.getCpf());
 		estrutura.setString(6, cliente.getLogin());
 		estrutura.setString(7, cliente.getSenha());
-		estrutura.setInt(8, local.getid());
 		int x = estrutura.executeUpdate();
 		estrutura.close();
 		return x + " cliente(s) foi(ram) adicionado(s)";

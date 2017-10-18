@@ -5,11 +5,9 @@ import java.util.List;
 
 import com.edp.luma.beans.Atendimento;
 import com.edp.luma.dao.AtendimentoDao;
-import com.google.gson.Gson;
 
 public class AtendimentoBo {
 	AtendimentoDao dao;
-	Gson gson = new Gson();
 	
 	public AtendimentoBo() throws Exception{
 		dao = new AtendimentoDao();
@@ -30,9 +28,6 @@ public class AtendimentoBo {
 		return "Erro ao adicionar.";
 	}
 
-	public String adicionarAtendimento(String json){
-		return adicionarAtendimento(gson.fromJson(json, Atendimento.class));
-	}
 	
 	public boolean editarAtendimento(Atendimento atendimento){
 		try {
@@ -67,7 +62,7 @@ public class AtendimentoBo {
 			return dao.getAtendimentos();
 		}
 		catch(SQLException e){
-			
+			e.printStackTrace();
 		}
 		return null;
 	}

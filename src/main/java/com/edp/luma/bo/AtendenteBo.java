@@ -17,6 +17,7 @@ public class AtendenteBo {
 		try {
 			return dao.adicionar(atendente);
 		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

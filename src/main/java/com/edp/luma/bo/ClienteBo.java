@@ -13,27 +13,27 @@ public class ClienteBo {
 	}
 	
 	public String novoCliente(Cliente cliente)throws Exception{
-		if(cliente.getNome().length()>50){
-			return "Nome execedeu a quantidade de caracteres";
-		}
-		if(cliente.getCpf().length()!=11){
-			return "Cpf inv�lido";
-		}
-		if(cliente.getEmail().contentEquals("@")==false){
-			return "E-mail inv�lido";
-		}
-		if(cliente.getId()<=0){
-			return "Id inv�lido";
-		}
-		if(cliente.getTelefone().length()<8 || cliente.getTelefone().length()>22){
-			return "Telefone inv�lido";
-		}
-		else{
+//		if(cliente.getNome().length()>50){
+//			return "Nome execedeu a quantidade de caracteres";
+//		}
+//		if(cliente.getCpf().length()!=11){
+//			return "Cpf inv�lido";
+//		}
+//		if(cliente.getEmail().contentEquals("@")==false){
+//			return "E-mail inv�lido";
+//		}
+//		if(cliente.getId()<=0){
+//			return "Id inv�lido";
+//		}
+//		if(cliente.getTelefone().length()<8 || cliente.getTelefone().length()>22){
+//			return "Telefone inv�lido";
+//		}
+		//else{
 		cliente.setNome(cliente.getNome().toUpperCase());
 		String x = dao.adicionar(cliente, null);
 		dao.fechar();
 		return x;
-		}
+		//}
 	}
 	
 	public String atualizarCliente(Cliente cliente)throws Exception{

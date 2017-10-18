@@ -61,17 +61,17 @@ public class Cliente implements Validator{
 	public void setLocal(Local local) {
 		this.local = local;
 	}
-	public Cliente(int id, String nome, String email, String telefone, String cpf,String login ,String senha, Local local) {
-		super();
-		this.id = id;
+
+	public Cliente(String nome, String email, String telefone, String cpf, String login, String senha) {
+
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.cpf = cpf;
 		this.login = login;
 		this.senha = senha;
-		this.local = local;
 	}
+
 	public Cliente() {
 		super();
 	}

@@ -12,6 +12,7 @@ public class Atendimento implements Validator{
 	private Date date;
 	private String avaliacao;
 	private Atendente atendente;
+	private Ocorrencia ocorrencia;
 	private Cliente cliente;
 
     public Atendente getAtendente() {
@@ -72,19 +73,16 @@ public class Atendimento implements Validator{
 	public void setAvaliacao(String avaliacao) {
 		this.avaliacao = avaliacao;
 	}
-	public Atendimento(int atendente_id, int cliente_id, int local_id, int ocorrencia_id, float temp_atendimento,
-			Date date, String avaliacao) {
-		super();
-		this.atendente_id = atendente_id;
-		this.cliente_id = cliente_id;
-		this.local_id = local_id;
-		this.ocorrencia_id = ocorrencia_id;
-		this.temp_atendimento = temp_atendimento;
-		this.date = date;
-		this.avaliacao = avaliacao;
+
+	public Ocorrencia getOcorrencia() {
+		return ocorrencia;
 	}
 
-    public Atendimento() {
+	public void setOcorrencia(Ocorrencia ocorrencia) {
+		this.ocorrencia = ocorrencia;
+	}
+
+	public Atendimento() {
 		super();
 	}
 
