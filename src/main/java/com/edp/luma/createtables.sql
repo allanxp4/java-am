@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS java_am;
+
+USE java_am;
 
 CREATE TABLE IF NOT EXISTS Atendentes  (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -21,13 +24,12 @@ avaliacao varchar(255) null
 
 CREATE TABLE IF NOT EXISTS clientes  (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-atendente_id int null,
-cliente_id int null,
-local_id int null,
-ocorrencia_id int null,
-temp_atendimento float null,
-`data` date null,
-avaliacao varchar(255) null
+nome varchar(255) null,
+email varchar(255) null,
+telefone varchar(255) null,
+cpf varchar(255) null,
+login varchar(255) null,
+senha varchar(255) null
 );
 
 CREATE TABLE IF NOT EXISTS locais  (
