@@ -9,8 +9,17 @@ public class Local implements Validator{
 	private String rua;
 	private int n_residencia;
 	private int id;
+	private List<Ocorrencia> ocorrencias;
 
-  public String getpais(){
+	public List<Ocorrencia> getOcorrencias() {
+		return ocorrencias;
+	}
+
+	public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+		this.ocorrencias = ocorrencias;
+	}
+
+	public String getpais(){
 	  return  pais;
   }
    public void setpais(String pais){
@@ -55,14 +64,13 @@ public class Local implements Validator{
     }
     
     
-    public Local (String pais,String cidade, String bairro, String rua, int n_residencia, int id){
+    public Local (String pais,String cidade, String bairro, String rua, int n_residencia){
     	super();
     	this.pais = pais;
     	this.cidade = cidade;
     	this.bairro = bairro;
     	this.rua = rua;
     	this.n_residencia = n_residencia;
-    	this.id = id;
     }
 	public Local() {
 		// TODO Auto-generated constructor stub

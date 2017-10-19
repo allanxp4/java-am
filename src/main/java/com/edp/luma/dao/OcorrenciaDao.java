@@ -3,6 +3,9 @@ package com.edp.luma.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.edp.luma.beans.Ocorrencia;
 import com.edp.luma.connection.ConnectionFactory;
@@ -21,8 +24,7 @@ public class OcorrenciaDao {
 	}
 	
 	//M�todo para adicionar ocorr�ncia
-	public String adicionar(Ocorrencia ocorrencia) throws Exception{
-		
+	public boolean adicionar(Ocorrencia ocorrencia) throws Exception{
 		int x;
 		
 		PreparedStatement estrutura = con.prepareStatement
@@ -36,13 +38,8 @@ public class OcorrenciaDao {
 		estrutura.setInt(4, ocorrencia.getLocal_ID());
 		estrutura.setString(5, ocorrencia.getData_formatada());
 		estrutura.setString(6, ocorrencia.getTempoTratativa());
-		
 		//Pegar quantas linhas foram alteradas
-		x = estrutura.executeUpdate();
-		estrutura.close();
-		
-		return x+ " ocorrencia(s) foi(ram) adicionado(s)";
-		
+		return estrutura.execute();
 	}
 	
 	//M�todo para apagar ocorr�ncia
@@ -76,7 +73,35 @@ public class OcorrenciaDao {
 		
 		return ocorrencia;
 	}
-	
+
+	public List<Ocorrencia> getAllOcorrencias() throws SQLException {
+		List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+		LocalDao localDao = null;
+		try {
+			localDao = new LocalDao();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		PreparedStatement estrutura = con.prepareStatement("SELECT * FROM OCORRENCIAS");
+		ResultSet resultado = estrutura.executeQuery();
+		while(resultado.next()){
+			Ocorrencia ocorrencia = new Ocorrencia();
+			ocorrencia.setTipoOcorrencia(resultado.getString("TIPO_OCORRENCIA"));
+			ocorrencia.setCriticidade(resultado.getString("CRITICIDADE"));
+			ocorrencia.setSintoma(resultado.getString("SINTOMA"));
+			ocorrencia.setLocal_ID(resultado.getInt("LOCAL_ID"));
+			ocorrencia.setData_formatada(resultado.getString("DATA"));
+			ocorrencia.setTempoTratativa(resultado.getString("TEMPO_TRATATIVA"));
+			ocorrencia.setLocal(localDao.getLocal(ocorrencia.getLocal_ID()));
+			ocorrencias.add(ocorrencia);
+		}
+		return ocorrencias;
+
+
+	}
+
 	public String editar(Ocorrencia ocorrencia) throws Exception{
 		
 		int x;
@@ -102,5 +127,31 @@ public class OcorrenciaDao {
 		
 		
 	}
-	
+
+	public List<Ocorrencia> getOcorrenciaByLocal() throws SQLException {
+		List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+		LocalDao localDao = null;
+		try {
+			localDao = new LocalDao();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		PreparedStatement estrutura = con.prepareStatement("SELECT * FROM OCORRENCIAS WHERE LOCAL_ID = ?");
+		ResultSet resultado = estrutura.executeQuery();
+		while(resultado.next()){
+			Ocorrencia ocorrencia = new Ocorrencia();
+			ocorrencia.setTipoOcorrencia(resultado.getString("TIPO_OCORRENCIA"));
+			ocorrencia.setCriticidade(resultado.getString("CRITICIDADE"));
+			ocorrencia.setSintoma(resultado.getString("SINTOMA"));
+			ocorrencia.setLocal_ID(resultado.getInt("LOCAL_ID"));
+			ocorrencia.setData_formatada(resultado.getString("DATA"));
+			ocorrencia.setTempoTratativa(resultado.getString("TEMPO_TRATATIVA"));
+			ocorrencia.setLocal(localDao.getLocal(ocorrencia.getLocal_ID()));
+			ocorrencias.add(ocorrencia);
+		}
+		return ocorrencias;
+
+	}
 }

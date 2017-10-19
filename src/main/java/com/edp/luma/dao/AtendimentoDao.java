@@ -33,11 +33,12 @@ private Connection conn;
 		stmt.setDate(6, atendimento.getDate());
 		stmt.setString(7, atendimento.getAvaliacao());
 		return stmt.execute();
-	}
+
+
+    }
 	
 	public boolean editar(Atendimento atendimento) throws SQLException{
-		String sql = "UPDATE atendimentos (atendente_id,cliente_id,local_id,ocorrencia_id,temp_atendimento,data,avaliacao)"
-				+ "SET (?, ?, ?, ?, ?, ?, ?) WHERE id = ?";
+		String sql = "UPDATE atendimentos (atendente_id,cliente_id,local_id,ocorrencia_id,temp_atendimento,data,avaliacao) SET (?, ?, ?, ?, ?, ?, ?) WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, atendimento.getAtendente_id());
 		stmt.setInt(2, atendimento.getCliente_id());
@@ -52,6 +53,7 @@ private Connection conn;
 	public boolean apagar(Atendimento atendimento) throws SQLException{
 		String sql = "DELETE FROM atendimentos WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, atendimento.getId());
 		return stmt.execute();
 	}
 	
@@ -78,7 +80,43 @@ private Connection conn;
 		String sql = "SELECT * FROM atendimentos";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet set = stmt.executeQuery();
-	
+
+        AtendenteDao dao = null;
+        try {
+            dao = new AtendenteDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Atendimento> atendimentos = new ArrayList<>();
+		while(set.next()){
+			Atendimento atendimento = new Atendimento();
+			atendimento.setAtendente_id(set.getInt("atendente_id"));
+			atendimento.setCliente_id(set.getInt("cliente_id"));
+			atendimento.setLocal_id(set.getInt("local_id"));
+			atendimento.setOcorrencia_id(set.getInt("ocorrencia_id"));
+			atendimento.setTemp_atendimento(set.getFloat("temp_atendimento"));
+			atendimento.setDate(set.getDate("data"));
+            atendimento.setAtendente(dao.getAtendente(atendimento.getAtendente_id()));
+			atendimentos.add(atendimento);
+		}
+		
+		return atendimentos;
+	}
+
+	public List<Atendimento> getAtendimentosByAtendente(int atendenteId) throws SQLException {
+		String sql = "SELECT * FROM atendimentos WHERE atendente_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, atendenteId);
+		ResultSet set = stmt.executeQuery();
+
+        AtendenteDao dao = null;
+        try {
+            dao = new AtendenteDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 		List<Atendimento> atendimentos = new ArrayList<>();
 		while(set.next()){
 			Atendimento atendimento = new Atendimento();
@@ -88,9 +126,12 @@ private Connection conn;
 			atendimento.setOcorrencia_id(set.getInt("ocorrencia_id"));
 			atendimento.setTemp_atendimento(set.getFloat("temp_atendimento"));
 			atendimento.setDate(set.getDate("data"));
+            atendimento.setAtendente(dao.getAtendente(atendimento.getAtendente_id()));
 			atendimentos.add(atendimento);
 		}
-		
+
 		return atendimentos;
+
 	}
+
 }

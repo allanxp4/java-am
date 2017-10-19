@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.edp.luma.beans.Atendente;
+import com.edp.luma.beans.Atendimento;
 import com.edp.luma.connection.ConnectionFactory;
 
 public class AtendenteDao {
@@ -18,28 +19,27 @@ private Connection conn;
 	}
 	
 	public boolean adicionar(Atendente atendente) throws SQLException{
-		String sql = "INSERT INTO atendentes (id, nome, cpf, rg, endereco, ativo)"
-				+ "VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO atendentes (nome, cpf, rg, endereco, ativo)"
+				+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, atendente.getId());
-		stmt.setString(2, atendente.getNome());
-		stmt.setString(3, atendente.getCpf());
-		stmt.setString(4, atendente.getRg());
-		stmt.setString(5, atendente.getEndereco());
-		stmt.setBoolean(6, atendente.isAtivo());
+		stmt.setString(1, atendente.getNome());
+		stmt.setString(2, atendente.getCpf());
+		stmt.setString(3, atendente.getRg());
+		stmt.setString(4, atendente.getEndereco());
+		stmt.setBoolean(5, atendente.isAtivo());
 		return stmt.execute();
+
 	}
 	
 	public boolean editar(Atendente atendente) throws SQLException{
 		String sql = "UPDATE atendentes (nome, cpf, rg, endereco, ativo)"
-				+ "SET (?, ?, ?, ?, ?, ?) WHERE id = ?";
+				+ "SET (?, ?, ?, ?, ?) WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, atendente.getId());
-		stmt.setString(2, atendente.getNome());
-		stmt.setString(3, atendente.getCpf());
-		stmt.setString(4, atendente.getRg());
-		stmt.setString(5, atendente.getEndereco());
-		stmt.setBoolean(6, atendente.isAtivo());
+		stmt.setString(1, atendente.getNome());
+		stmt.setString(2, atendente.getCpf());
+		stmt.setString(3, atendente.getRg());
+		stmt.setString(4, atendente.getEndereco());
+		stmt.setBoolean(5, atendente.isAtivo());
 		return stmt.execute();
 	}
 	
@@ -72,8 +72,14 @@ private Connection conn;
 		String sql = "SELECT * FROM atendentes";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet set = stmt.executeQuery();
-	
-		List<Atendente> atendentes = new ArrayList<>();
+        AtendimentoDao dao = null;
+        try {
+            dao = new AtendimentoDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Atendente> atendentes = new ArrayList<>();
 		while(set.next()){
 			Atendente atendente = new Atendente();
 			atendente.setId(set.getInt("id"));
@@ -82,7 +88,9 @@ private Connection conn;
 			atendente.setRg(set.getString("rg"));
 			atendente.setEndereco(set.getString("endereco"));
 			atendente.setAtivo(set.getBoolean("ativo"));
-			atendentes.add(atendente);
+            List<Atendimento> atendimentosByAtendente = dao.getAtendimentosByAtendente(atendente.getId());
+            atendente.setAtendimentos(atendimentosByAtendente);
+            atendentes.add(atendente);
 		}
 		
 		return atendentes;

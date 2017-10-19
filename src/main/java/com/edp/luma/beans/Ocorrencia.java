@@ -13,16 +13,16 @@ public class Ocorrencia implements Validator {
 	private String data_formatada;
 	private Atendimento atendimento;
 	private Local local;
+	private Cliente cliente;
 
 
 
 
 	
 	
-	public Ocorrencia( int id_ocorrencia, String tipoOcorrencia, String criticidade, String sintoma, int local_id, 
+	public Ocorrencia(String tipoOcorrencia, String criticidade, String sintoma, int local_id,
 			String tempoTratativa) {
 		super();
-		this.id_ocorrencia = id_ocorrencia;
 		this.tipoOcorrencia = tipoOcorrencia;
 		this.criticidade = criticidade;
 		this.sintoma = sintoma;
@@ -113,6 +113,13 @@ public class Ocorrencia implements Validator {
 		this.tempoTratativa = tempoTratativa;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public List<String> validationErrors() {

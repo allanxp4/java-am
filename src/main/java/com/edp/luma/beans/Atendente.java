@@ -67,7 +67,6 @@ public class Atendente implements Validator {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	@Override
 	public List<String> validationErrors() {
 		return null;

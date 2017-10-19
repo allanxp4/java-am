@@ -36,9 +36,9 @@ public class OcorrenciaBo {
 		}
 		
 		OcorrenciaDao dao = new OcorrenciaDao();
-		String retorno = dao.adicionar(ocorrencia);
+		dao.adicionar(ocorrencia);
 		dao.fechar();
-		return retorno;
+		return "Ok";
 		
 	}
 	

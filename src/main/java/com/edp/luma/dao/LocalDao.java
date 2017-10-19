@@ -51,7 +51,15 @@ public class LocalDao {
 
 	  
 	  public Local getLocal(int id) throws SQLException{
-			String sql = "SELECT * FROM locais WHERE id = ?";
+
+		  OcorrenciaDao dao = null;
+		  try {
+			  dao = new OcorrenciaDao();
+		  } catch (Exception e) {
+			  e.printStackTrace();
+		  }
+
+		  String sql = "SELECT * FROM locais WHERE id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			ResultSet set = stmt.executeQuery();
@@ -64,6 +72,7 @@ public class LocalDao {
 				local.setrua(set.getString("rua"));
 				local.setn_residencia(set.getInt("n_residencia"));
 				local.setid(set.getInt("id"));
+				local.setOcorrencias(dao.getOcorrenciaByLocal());
 			}
 			
 			return local;

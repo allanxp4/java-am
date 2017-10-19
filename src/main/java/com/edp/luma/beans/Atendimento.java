@@ -3,7 +3,8 @@ package com.edp.luma.beans;
 import java.sql.Date;
 import java.util.List;
 
-public class Atendimento implements Validator{
+public class Atendimento {
+	private int id;
 	private int atendente_id;
 	private int cliente_id;
 	private int local_id;
@@ -15,7 +16,25 @@ public class Atendimento implements Validator{
 	private Ocorrencia ocorrencia;
 	private Cliente cliente;
 
-    public Atendente getAtendente() {
+	public Atendimento(int atendente_id, int ocorrencia_id, float temp_atendimento, Date date, String avaliacao) {
+		this.atendente_id = atendente_id;
+		this.ocorrencia_id = ocorrencia_id;
+		this.temp_atendimento = temp_atendimento;
+		this.date = date;
+		this.avaliacao = avaliacao;
+		this.atendente = atendente;
+		this.ocorrencia = ocorrencia;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Atendente getAtendente() {
         return atendente;
     }
 
@@ -86,13 +105,4 @@ public class Atendimento implements Validator{
 		super();
 	}
 
-    @Override
-    public List<String> validationErrors() {
-        return null;
-    }
-
-    @Override
-    public boolean checkValidation() {
-        return false;
-    }
 }
